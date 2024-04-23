@@ -4,6 +4,7 @@
   Description: Sample todo app with Firebase 
 */
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:week7_networking_discussion/models/todo_model.dart';
@@ -33,13 +34,14 @@ class TodoModal extends StatelessWidget {
   // Method to build the content or body depending on the functionality
   Widget _buildContent(BuildContext context) {
     // Use context.read to get the last updated list of todos
-    List<Todo> todoItems = context.read<TodoListProvider>().todo;
+    Stream<QuerySnapshot> todoItems = context.read<TodoListProvider>().todo;
 
     switch (type) {
       case 'Delete':
         {
-          return Text(
-            "Are you sure you want to delete '${todoItems[todoIndex].title}'?",
+          return const Text(
+            // "Are you sure you want to delete '${todoItems[todoIndex].title}'?",
+            "Are you sure you want to delete?",
           );
         }
       // Edit and add will have input field in them
@@ -48,14 +50,14 @@ class TodoModal extends StatelessWidget {
           controller: _formFieldController,
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
-            hintText: todoIndex != -1 ? todoItems[todoIndex].title : '',
+            // hintText: todoIndex != -1 ? todoItems[todoIndex].title : '',
           ),
         );
     }
   }
 
   TextButton _dialogAction(BuildContext context) {
-    List<Todo> todoItems = context.read<TodoListProvider>().todo;
+    Stream<QuerySnapshot> todoItems = context.read<TodoListProvider>().todo;
 
     return TextButton(
       onPressed: () {
@@ -86,13 +88,13 @@ class TodoModal extends StatelessWidget {
             }
           case 'Delete':
             {
-              context
-                  .read<TodoListProvider>()
-                  .deleteTodo(todoItems[todoIndex].title);
+              // context
+              //     .read<TodoListProvider>()
+              //     .deleteTodo(todoItems[todoIndex].title);
 
-              // Remove dialog after editing
-              Navigator.of(context).pop();
-              break;
+              // // Remove dialog after editing
+              // Navigator.of(context).pop();
+              // break;
             }
         }
       },
